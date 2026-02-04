@@ -26,7 +26,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 0x 5px !important;
+            padding: 0px 5px !important;
             border-radius: 12px;
         }
         .active-press:active { 
@@ -63,6 +63,16 @@
     </footer>
 
     <script>
+        // MANTENER PANTALLA ENCENDIDA (Wake Lock)
+        let wakeLock = null;
+        async function activarWakeLock() {
+            try {
+                if ('wakeLock' in navigator) {
+                    wakeLock = await navigator.wakeLock.request('screen');
+                    console.log("Wake Lock activo: La pantalla no se apagará");
+                }
+            } catch (err) { console.error(`${err.name}, ${err.message}`); }
+        }
         const poderes = [
             { id: "3 MISILES", img: "3misiles.png", keyD: "z", keyM: "b" },
             { id: "3 BOMBAS", img: "3bombas.png", keyD: "x", keyM: "n" },
@@ -151,4 +161,3 @@
     </script>
 </body>
 </html>
-
