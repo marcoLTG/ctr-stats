@@ -11,166 +11,143 @@
             touch-action: manipulation;
             -webkit-tap-highlight-color: transparent;
         }
-
-        /* Aprovechar mejor el ancho */
+        body { background-color: #0f172a; overflow-x: hidden; }
         .grid-layout { 
             display: grid; 
             grid-template-columns: repeat(3, 1fr); 
-            gap: 8px; /* Espacio entre botones */
+            gap: 10px; 
+            width: 100%;
         }
-
-        /* Botones mucho más grandes y llamativos */
         .power-card { 
             transition: all 0.1s; 
             border: 2px solid #374151;
-            background-color: rgba(55, 65, 81, 0.5);
-            padding: 5px 5px !important; /* Más espacio interno */
+            background-color: rgba(30, 41, 59, 0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 5px !important;
+            border-radius: 12px;
         }
-
         .active-press:active { 
             transform: scale(0.95); 
-            background-color: #60a5fa; /* Color azul al tocar */
-            border-color: #ffffff;
+            background-color: #3b82f6; 
+            border-color: white;
         }
-
-        .flash-red {
-            animation: flash 0.3s;
-        }
-        @keyframes flash {
-            0% { background-color: #ef4444; }
-            100% { background-color: transparent; }
+        .flash-red { animation: flash 0.3s forwards; }
+        @keyframes flash { 
+            0% { background-color: #ef4444; } 
+            100% { background-color: rgba(30, 41, 59, 0.7); } 
         }
     </style>
 </head>
-<body class="bg-slate-900 text-white p-2 font-sans select-none">
+<body class="p-2 font-sans select-none text-white">
 
-    <header class="text-center my-2">
-        <h1 class="text-xl font-black text-yellow-400 italic tracking-tighter text-shadow">CTR STATS COLLECTOR 🏁</h1>
-    </header>
+    <h1 class="text-center text-2xl font-black text-yellow-400 italic mb-4">CTR STATS COLLECTOR 🏁</h1>
 
-    <main class="flex gap-2 mb-20">
-        <section class="w-1/2 bg-slate-800 p-2 rounded-xl border-t-4 border-blue-500 shadow-2xl">
-            <h2 class="text-center font-bold text-xs mb-2 text-blue-300 uppercase tracking-widest">David</h2>
+    <main class="flex gap-4 mb-24">
+        <section class="w-1/2 p-1 border-t-4 border-blue-500 bg-slate-800/50 rounded-xl">
+            <h2 class="text-center font-bold text-blue-400 mb-2">DAVID</h2>
             <div id="btns-David" class="grid-layout"></div>
         </section>
 
-        <section class="w-1/2 bg-slate-800 p-2 rounded-xl border-t-4 border-red-500 shadow-2xl">
-            <h2 class="text-center font-bold text-xs mb-2 text-red-300 uppercase tracking-widest">Marco</h2>
+        <section class="w-1/2 p-1 border-t-4 border-red-500 bg-slate-800/50 rounded-xl">
+            <h2 class="text-center font-bold text-red-400 mb-2">MARCO</h2>
             <div id="btns-Marco" class="grid-layout"></div>
         </section>
     </main>
 
-    <footer class="fixed bottom-4 left-0 right-0 flex justify-center gap-4 px-4">
-        <button onclick="descargarExcel()" class="bg-green-600 hover:bg-green-500 text-white px-6 py-3 rounded-full font-bold shadow-2xl active-press flex items-center gap-2">
-            <span>💾</span> EXCEL
-        </button>
-        <button onclick="confirmarReset()" class="bg-slate-700 text-white p-3 rounded-full shadow-xl active-press">
-            <span>🔄</span>
-        </button>
+    <footer class="fixed bottom-4 left-0 right-0 flex justify-center gap-6 px-4 bg-slate-900/80 py-2">
+        <button onclick="descargarExcel()" class="bg-green-600 px-10 py-4 rounded-full font-black shadow-2xl active-press">💾 EXCEL</button>
+        <button onclick="confirmarReset()" class="bg-slate-700 p-4 rounded-full active-press">🔄</button>
     </footer>
 
     <script>
         const poderes = [
-            { id: "COMBO 3 MISILES", img: "3misiles.png" },
-            { id: "COMBO 3 BOMBAS", img: "3bombas.png" },
-            { id: "BOMBA ATRAS", img: "bomba_atras.png" },
-            { id: "BURBUJAZO", img: "burbuja.png" },
-            { id: "BURBUJAZO ATRAS", img: "burbuja_atras.png" },
-            { id: "MISIL ATRAS", img: "misil_atras.png" },
-            { id: "MISIL", img: "misil.png" },
-            { id: "BOMBA", img: "bomba.png" },
-            { id: "MASCARA", img: "mascara.png" },
-            { id: "RAYO", img: "rayo.png" },
-            { id: "DIMETAZO VOLADOR", img: "dimetazo.png" },
-            { id: "ESPICHADA", img: "espichada.png" },
-            { id: "RELOJ", img: "reloj.png" },
-            { id: "NITRO", img: "nitro.png" },
-            { id: "TNT VOLADOR", img: "tnt.png" }
+            { id: "3 MISILES", img: "3misiles.png", keyD: "9", keyM: "q" },
+            { id: "3 BOMBAS", img: "3bombas.png", keyD: "*", keyM: "w" },
+            { id: "BOMBA ATRAS", img: "bomba_atras.png", keyD: ".", keyM: "e" },
+            { id: "BURBUJAZO", img: "burbuja.png", keyD: "5", keyM: "r" },
+            { id: "BURBUJAZO ATRAS", img: "burbuja_atras.png", keyD: "4", keyM: "t" },
+            { id: "MISIL ATRAS", img: "misil_atras.png", keyD: "2", keyM: "a" },
+            { id: "MISIL", img: "misil.png", keyD: "1", keyM: "s" },
+            { id: "BOMBA", img: "bomba.png", keyD: "0", keyM: "d" },
+            { id: "MASCARA", img: "mascara.png", keyD: "Enter", keyM: "f" },
+            { id: "RAYO", img: "rayo.png", keyD: "3", keyM: "g" },
+            { id: "DIMETAZO", img: "dimetazo.png", keyD: "7", keyM: "z" },
+            { id: "ESPICHADA", img: "espichada.png", keyD: "8", keyM: "x" },
+            { id: "RELOJ", img: "reloj.png", keyD: "6", keyM: "c" },
+            { id: "NITRO", img: "nitro.png", keyD: "-", keyM: "v" },
+            { id: "TNT", img: "tnt.png", keyD: "+", keyM: "b" }
         ];
 
         let stats = { David: {}, Marco: {} };
         poderes.forEach(p => { stats.David[p.id] = 0; stats.Marco[p.id] = 0; });
 
-        let timer;
-        let isLongPress = false;
+        function hablar(texto) {
+            const m = new SpeechSynthesisUtterance(texto);
+            m.lang = 'es-ES'; m.rate = 1.3;
+            window.speechSynthesis.speak(m);
+        }
 
         function crearInterfaz(jugador) {
             const div = document.getElementById(`btns-${jugador}`);
             poderes.forEach(p => {
                 const card = document.createElement("div");
-                card.className = "power-card flex flex-col items-center bg-slate-700/50 p-1 rounded-lg active-press touch-none";
+                card.className = "power-card active-press touch-none";
+                card.id = `card-${jugador}-${p.id}`;
                 card.innerHTML = `
-                    <img src="${p.img}" class="w-16 h-16 object-contain pointer-events-none mb-1" 
-                         onerror="this.src='https://via.placeholder.com/32?text=?'">
-                    <span id="count-${jugador}-${p.id}" class="text-base font-black text-yellow-400 leading-none">0</span>
+                    <img src="${p.img}" class="w-14 h-14 object-contain mb-1" onerror="this.src='https://via.placeholder.com/50'">
+                    <span id="count-${jugador}-${p.id}" class="text-3xl font-black text-yellow-400">0</span>
                 `;
 
-                // Manejo de eventos para sumar y restar
-                card.onpointerdown = (e) => {
-                    isLongPress = false;
-                    timer = setTimeout(() => {
-                        restar(jugador, p.id, card);
-                        isLongPress = true;
-                    }, 600);
-                };
-
-                card.onpointerup = () => {
-                    clearTimeout(timer);
-                };
-
-                card.onclick = () => {
-                    if (!isLongPress) {
-                        sumar(jugador, p.id);
-                    }
-                };
-
+                let timer;
+                card.onpointerdown = () => timer = setTimeout(() => restar(jugador, p.id), 600);
+                card.onpointerup = () => clearTimeout(timer);
+                card.onclick = () => sumar(jugador, p.id);
                 div.appendChild(card);
             });
         }
 
         function sumar(jugador, poderId) {
             stats[jugador][poderId]++;
-            actualizarDato(jugador, poderId);
-            if (navigator.vibrate) navigator.vibrate(25);
+            actualizar(jugador, poderId);
+            hablar(poderId);
+            if (navigator.vibrate) navigator.vibrate(20);
         }
 
-        function restar(jugador, poderId, elemento) {
+        function restar(jugador, poderId) {
             if (stats[jugador][poderId] > 0) {
                 stats[jugador][poderId]--;
-                actualizarDato(jugador, poderId);
-                elemento.classList.add('flash-red');
-                setTimeout(() => elemento.classList.remove('flash-red'), 300);
-                if (navigator.vibrate) navigator.vibrate([40, 30, 40]);
+                actualizar(jugador, poderId);
+                const el = document.getElementById(`card-${jugador}-${poderId}`);
+                el.classList.add('flash-red');
+                setTimeout(() => el.classList.remove('flash-red'), 300);
+                hablar("Borrado");
             }
         }
 
-        function actualizarDato(jugador, poderId) {
-            document.getElementById(`count-${jugador}-${poderId}`).innerText = stats[jugador][poderId];
-        }
+        function actualizar(j, p) { document.getElementById(`count-${j}-${p}`).innerText = stats[j][p]; }
+
+        // MANEJO DE TECLADO
+        window.onkeydown = (e) => {
+            const pD = poderes.find(p => p.keyD === e.key);
+            const pM = poderes.find(p => p.keyM === e.key.toLowerCase());
+            if (pD) sumar("David", pD.id);
+            if (pM) sumar("Marco", pM.id);
+        };
 
         function descargarExcel() {
-            const data = poderes.map(p => ({
-                "Poder": p.id,
-                "David": stats.David[p.id],
-                "Marco": stats.Marco[p.id]
-            }));
+            const data = poderes.map(p => ({ "Poder": p.id, "David": stats.David[p.id], "Marco": stats.Marco[p.id] }));
             const ws = XLSX.utils.json_to_sheet(data);
             const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "CTR_Stats");
-            XLSX.writeFile(wb, `CTR_RESULTADOS.xlsx`);
+            XLSX.utils.book_append_sheet(wb, ws, "CTR");
+            XLSX.writeFile(wb, "CTR_RESULTADOS.xlsx");
         }
 
-        function confirmarReset() {
-            if(confirm("¿Reiniciar contadores?")) window.location.reload();
-        }
+        function confirmarReset() { if(confirm("¿Resetear?")) window.location.reload(); }
 
-        crearInterfaz("David");
-        crearInterfaz("Marco");
+        crearInterfaz("David"); crearInterfaz("Marco");
     </script>
 </body>
 </html>
-
-
-
-
-
