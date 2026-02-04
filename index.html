@@ -24,7 +24,7 @@
             transition: all 0.1s; 
             border: 2px solid #374151;
             background-color: rgba(55, 65, 81, 0.5);
-            padding: 10px 5px !important; /* Más espacio interno */
+            padding: 20px 5px !important; /* Más espacio interno */
         }
 
         .active-press:active { 
@@ -100,7 +100,7 @@
                 const card = document.createElement("div");
                 card.className = "power-card flex flex-col items-center bg-slate-700/50 p-1 rounded-lg active-press touch-none";
                 card.innerHTML = `
-                    <img src="${p.img}" class="w-8 h-8 object-contain pointer-events-none mb-1" 
+                    <img src="${p.img}" class="w-16 h-16 object-contain pointer-events-none mb-1" 
                          onerror="this.src='https://via.placeholder.com/32?text=?'">
                     <span id="count-${jugador}-${p.id}" class="text-base font-black text-yellow-400 leading-none">0</span>
                 `;
