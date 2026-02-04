@@ -7,34 +7,37 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
-        /* Corrección del error que viste: el asterisco envuelve la propiedad */
         * {
             touch-action: manipulation;
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* Aprovechar mejor el ancho */
         .grid-layout { 
             display: grid; 
             grid-template-columns: repeat(3, 1fr); 
-            gap: 6px; 
+            gap: 8px; /* Espacio entre botones */
+        }
+
+        /* Botones mucho más grandes y llamativos */
+        .power-card { 
+            transition: all 0.1s; 
+            border: 2px solid #374151;
+            background-color: rgba(55, 65, 81, 0.5);
+            padding: 10px 5px !important; /* Más espacio interno */
         }
 
         .active-press:active { 
-            transform: scale(0.92); 
-            background-color: #4b5563; 
+            transform: scale(0.95); 
+            background-color: #60a5fa; /* Color azul al tocar */
+            border-color: #ffffff;
         }
 
-        .power-card { 
-            transition: all 0.1s; 
-            border: 1px solid #374151; 
-        }
-
-        /* Animación para cuando borras un punto */
         .flash-red {
-            animation: flash 0.3s inline;
+            animation: flash 0.3s;
         }
         @keyframes flash {
-            0% { background-color: #7f1d1d; }
+            0% { background-color: #ef4444; }
             100% { background-color: transparent; }
         }
     </style>
